@@ -1,10 +1,10 @@
 package com.angelorobson.opsmoonkmm.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.angelorobson.opsmoonkmm.Greeting
 import android.widget.TextView
-import com.angelorobson.opsmoonkmm.Hello
+import androidx.appcompat.app.AppCompatActivity
+import com.angelorobson.opsmoonkmm.Greeting
+import com.angelorobson.opsmoonkmm.data.repository.remote.PostRemoteRepository
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private val mainScope = MainScope()
-    private val greeting = Greeting()
+
+    private val service = PostRemoteRepository.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         mainScope.launch {
             kotlin.runCatching {
-                greeting.greeting()
+                service.getPosts().random().title
             }.onSuccess {
                 tv.text = it
             }.onFailure {

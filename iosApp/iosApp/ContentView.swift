@@ -2,9 +2,14 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-	let greeting = Greeting()
+
     
     @State var greet = "Loading..."
+    @State var title = "Loading..."
+
+    let service = PostRemoteRepositoryCompanion.shared.create()
+    let greeting = Greeting()
+
     
     func load() {
         greeting.greeting {result, error in
@@ -17,10 +22,24 @@ struct ContentView: View {
         }
     }
 
+    func loadFromApi() {
+        service.getPosts{result, error in
+            if let result = result {
+                self.title = result.randomElement()?.title ?? ""
+            } else if let error = error {
+                title = "Error \(error)"
+            }
+        }
+    }
+    
 	var body: some View {
         
         Text(greet).onAppear {
             load()
+        }
+        
+        Text(title).onAppear {
+            loadFromApi()
         }
     }
 }
