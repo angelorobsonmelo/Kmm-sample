@@ -28,7 +28,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 //Logger
-                implementation("com.github.aakira:napier:1.4.1")
+                implementation("io.github.aakira:napier:1.4.1")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
@@ -58,11 +58,7 @@ kotlin {
             }
         }
 
-        val iosX64Main by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-            }
-        }
+        val iosX64Main by getting
 
         val iosArm64Main by getting
         //val iosSimulatorArm64Main by getting
@@ -70,6 +66,9 @@ kotlin {
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+            }
             //iosSimulatorArm64Main.dependsOn(this)
         }
         val iosX64Test by getting
