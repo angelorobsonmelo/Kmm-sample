@@ -9,6 +9,7 @@ import com.angelorobson.opsmoonkmm.Greeting
 import com.angelorobson.opsmoonkmm.data.repository.remote.PostRemoteRepository
 import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
 import com.angelorobson.opsmoonkmm.utils.RequestState
+import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
 //import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.catch
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     // View Model
-//    lateinit var viewModel: PostsViewModel
+    lateinit var viewModel: PostsViewModel
     private lateinit var tv: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,29 +31,29 @@ class MainActivity : AppCompatActivity() {
 
         tv = findViewById(R.id.text_view)
 
-//        initViewModel()
+        initViewModel()
     }
 
-//    private fun initViewModel() {
-//        viewModel = ViewModelProviders.of(this).get(PostsViewModel::class.java)
-//
-//        viewModel.getPosts()
-//
-//        viewModel.allRepositories.asLiveData().observe(this) {
-//            when (it) {
-//                is RequestState.Error -> {
-//
-//                }
-//                RequestState.Idle -> {
-//
-//                }
-//                RequestState.Loading -> {
-//
-//                }
-//                is RequestState.Success -> {
-//                    tv.text = it.data.random().title
-//                }
-//            }
-//        }
-//    }
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(PostsViewModel::class.java)
+
+        viewModel.getPosts()
+
+        viewModel.allRepositories.asLiveData().observe(this) {
+            when (it) {
+                is RequestState.Error -> {
+
+                }
+                RequestState.Idle -> {
+
+                }
+                RequestState.Loading -> {
+
+                }
+                is RequestState.Success -> {
+                    tv.text = it.data.random().title
+                }
+            }
+        }
+    }
 }
