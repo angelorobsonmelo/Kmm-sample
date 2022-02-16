@@ -24,7 +24,7 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "1.5.4"
+        val ktorVersion = "1.6.3"
         val commonMain by getting {
             dependencies {
                 //Logger
@@ -36,11 +36,11 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
 
-                // Serialization
+//                 Serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
 
                 // MOKO - MVVM
-//                implementation( "dev.icerock.moko:mvvm:0.11.0")
+                implementation( "dev.icerock.moko:mvvm:0.11.0")
 
             }
         }
