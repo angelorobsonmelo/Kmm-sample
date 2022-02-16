@@ -1,7 +1,7 @@
 package com.angelorobson.opsmoonkmm.data.repository.remote
 
-import com.angelorobson.opsmoonkmm.data.dto.PostRequest
-import com.angelorobson.opsmoonkmm.data.dto.PostResponse
+import com.angelorobson.opsmoonkmm.domain.models.PostRequest
+import com.angelorobson.opsmoonkmm.domain.models.PostResponse
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*

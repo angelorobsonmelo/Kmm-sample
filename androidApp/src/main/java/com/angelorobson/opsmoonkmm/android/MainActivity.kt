@@ -3,33 +3,56 @@ package com.angelorobson.opsmoonkmm.android
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.asLiveData
 import com.angelorobson.opsmoonkmm.Greeting
 import com.angelorobson.opsmoonkmm.data.repository.remote.PostRemoteRepository
+import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
+import com.angelorobson.opsmoonkmm.utils.RequestState
+//import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainScope = MainScope()
-
-    private val service = PostRemoteRepository.create()
+    // View Model
+//    lateinit var viewModel: PostsViewModel
+    private lateinit var tv: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val tv: TextView = findViewById(R.id.text_view)
-        tv.text = "Loading..."
+        tv = findViewById(R.id.text_view)
 
-        mainScope.launch {
-            kotlin.runCatching {
-                service.getPosts().random().title
-            }.onSuccess {
-                tv.text = it
-            }.onFailure {
-                tv.text = it.message
-            }
-        }
+//        initViewModel()
     }
+
+//    private fun initViewModel() {
+//        viewModel = ViewModelProviders.of(this).get(PostsViewModel::class.java)
+//
+//        viewModel.getPosts()
+//
+//        viewModel.allRepositories.asLiveData().observe(this) {
+//            when (it) {
+//                is RequestState.Error -> {
+//
+//                }
+//                RequestState.Idle -> {
+//
+//                }
+//                RequestState.Loading -> {
+//
+//                }
+//                is RequestState.Success -> {
+//                    tv.text = it.data.random().title
+//                }
+//            }
+//        }
+//    }
 }

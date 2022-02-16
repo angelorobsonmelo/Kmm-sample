@@ -7,7 +7,6 @@ struct ContentView: View {
     @State var greet = "Loading..."
     @State var title = "Loading..."
 
-    let service = PostRemoteRepositoryCompanion.shared.create()
     let greeting = Greeting()
 
     
@@ -22,24 +21,11 @@ struct ContentView: View {
         }
     }
 
-    func loadFromApi() {
-        service.getPosts{result, error in
-            if let result = result {
-                self.title = result.randomElement()?.title ?? ""
-            } else if let error = error {
-                title = "Error \(error)"
-            }
-        }
-    }
     
 	var body: some View {
         
         Text(greet).onAppear {
             load()
-        }
-        
-        Text(title).onAppear {
-            loadFromApi()
         }
     }
 }

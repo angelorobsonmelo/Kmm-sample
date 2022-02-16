@@ -28,4 +28,10 @@ dependencies {
     val coroutinesVersion = properties["version.kotlinx.coroutines"]
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+
+    // ARCHITECTURE COMPONENTS
+//    implementation("android.arch.lifecycle:extensions:1.1.1")
+    implementation("android.arch.lifecycle:viewmodel:1.1.1")
+
+    implementation("dev.icerock.moko:mvvm:0.11.0")
 }
