@@ -7,7 +7,6 @@ struct ContentView: View {
     @State var greet = "Loading..."
 
 
-    let greeting = Greeting()
     private var viewmodel = PostsViewModel()
 
     

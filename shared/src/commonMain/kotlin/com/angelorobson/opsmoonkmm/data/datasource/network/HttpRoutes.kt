@@ -1,4 +1,4 @@
-package com.angelorobson.opsmoonkmm.data.repository.remote
+package com.angelorobson.opsmoonkmm.data.datasource.network
 
 object HttpRoutes {
 

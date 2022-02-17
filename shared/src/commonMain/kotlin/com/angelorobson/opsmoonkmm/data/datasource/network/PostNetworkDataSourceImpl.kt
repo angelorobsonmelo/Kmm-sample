@@ -1,4 +1,4 @@
-package com.angelorobson.opsmoonkmm.data.repository.remote
+package com.angelorobson.opsmoonkmm.data.datasource.network
 
 import com.angelorobson.opsmoonkmm.domain.models.PostRequest
 import com.angelorobson.opsmoonkmm.domain.models.PostResponse
@@ -7,9 +7,9 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class PostRemoteRepositoryImpl(
+class PostNetworkDataSourceImpl(
     private val client: HttpClient
-) : PostRemoteRepository {
+) : PostNetworkDataSource {
 
     override suspend fun getPosts(): List<PostResponse> {
         return try {

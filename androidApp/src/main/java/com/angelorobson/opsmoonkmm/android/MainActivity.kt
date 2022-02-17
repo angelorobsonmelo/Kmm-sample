@@ -1,12 +1,12 @@
 package com.angelorobson.opsmoonkmm.android
 
-//import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
+//import com.angelorobson.opsmoonkmm.presentation.viewmodel.PostsViewModel
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.angelorobson.opsmoonkmm.utils.network.NetworkResult
-import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
+import com.angelorobson.opsmoonkmm.presentation.viewmodel.PostsViewModel
 
 
 class MainActivity : AppCompatActivity() {

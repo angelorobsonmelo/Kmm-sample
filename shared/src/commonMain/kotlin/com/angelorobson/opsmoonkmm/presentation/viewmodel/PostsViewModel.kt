@@ -1,9 +1,8 @@
-package com.angelorobson.opsmoonkmm.viewmodel
+package com.angelorobson.opsmoonkmm.presentation.viewmodel
 
 import com.angelorobson.opsmoonkmm.di.KodeinInjector
 import com.angelorobson.opsmoonkmm.domain.models.PostResponse
 import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
-import com.angelorobson.opsmoonkmm.utils.*
 import com.angelorobson.opsmoonkmm.utils.network.NetworkResult
 import dev.icerock.moko.mvvm.livedata.LiveData
 import dev.icerock.moko.mvvm.livedata.MutableLiveData
@@ -37,7 +36,6 @@ class PostsViewModel : ViewModel() {
             }
         } catch (ex: Exception) {
             _allPostsLiveData.value = NetworkResult.Error(ex.message)
-
         }
 
     }

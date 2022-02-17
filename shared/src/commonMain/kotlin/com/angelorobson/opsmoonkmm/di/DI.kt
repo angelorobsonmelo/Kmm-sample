@@ -1,7 +1,9 @@
 package com.angelorobson.opsmoonkmm.di
 
-import com.angelorobson.opsmoonkmm.data.repository.remote.PostRemoteRepository
-import com.angelorobson.opsmoonkmm.data.repository.remote.PostRemoteRepositoryImpl
+import com.angelorobson.opsmoonkmm.data.datasource.network.PostNetworkDataSource
+import com.angelorobson.opsmoonkmm.data.datasource.network.PostNetworkDataSourceImpl
+import com.angelorobson.opsmoonkmm.data.repository.PostRepository
+import com.angelorobson.opsmoonkmm.data.repository.PostRepositoryImpl
 import com.angelorobson.opsmoonkmm.initLogger
 import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
 import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCaseImpl
@@ -18,8 +20,6 @@ import kotlin.native.concurrent.ThreadLocal
 
 @ThreadLocal
 val KodeinInjector = DI {
-
-    //bind<CoroutineContext>() with provider { ApplicationDispatcher }
 
     bind<CoroutineContext>() with provider { Dispatchers.Main }
 
@@ -43,12 +43,12 @@ val KodeinInjector = DI {
     /**
      * NETWORK DATA SOURCE
      */
-    bind<PostRemoteRepository>() with provider { PostRemoteRepositoryImpl(client) }
+    bind<PostNetworkDataSource>() with provider { PostNetworkDataSourceImpl(client) }
 
     /**
      * REPOSITORIES
      */
-
+    bind<PostRepository>() with provider { PostRepositoryImpl(instance()) }
 
     /**
      * USECASES
