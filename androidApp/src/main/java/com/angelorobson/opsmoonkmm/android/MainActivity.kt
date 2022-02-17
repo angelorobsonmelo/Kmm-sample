@@ -1,35 +1,51 @@
 package com.angelorobson.opsmoonkmm.android
 
+//import com.angelorobson.opsmoonkmm.presentation.viewmodel.PostsViewModel
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.angelorobson.opsmoonkmm.Greeting
-import com.angelorobson.opsmoonkmm.data.repository.remote.PostRemoteRepository
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.ViewModelProviders
+import com.angelorobson.opsmoonkmm.utils.network.NetworkResult
+import com.angelorobson.opsmoonkmm.presentation.viewmodel.PostsViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainScope = MainScope()
-
-    private val service = PostRemoteRepository.create()
+    // View Model
+    lateinit var viewModel: PostsViewModel
+    private lateinit var tv: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val tv: TextView = findViewById(R.id.text_view)
-        tv.text = "Loading..."
+        tv = findViewById(R.id.text_view)
 
-        mainScope.launch {
-            kotlin.runCatching {
-                service.getPosts().random().title
-            }.onSuccess {
-                tv.text = it
-            }.onFailure {
-                tv.text = it.message
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(PostsViewModel::class.java)
+        viewModel.getPosts()
+
+        viewModel.allPostsLiveData.addObserver {
+            when (it) {
+                is NetworkResult.Loading -> {
+
+                }
+
+                is NetworkResult.Error -> {
+
+                }
+
+                is NetworkResult.Success -> {
+                    tv.text = it.data?.random()?.title
+                }
+                is NetworkResult.Idle -> {
+
+                }
             }
         }
+
     }
 }

@@ -24,19 +24,23 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "1.5.4"
+        val ktorVersion = "1.6.3"
         val commonMain by getting {
             dependencies {
                 //Logger
                 implementation("io.github.aakira:napier:1.4.1")
+                implementation("org.kodein.di:kodein-di:7.8.0")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
 
-                // Serialization
+//                 Serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
+
+                // MOKO - MVVM
+                implementation( "dev.icerock.moko:mvvm:0.11.0")
 
             }
         }

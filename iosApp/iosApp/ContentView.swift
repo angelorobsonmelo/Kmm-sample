@@ -2,50 +2,61 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-
+    
     
     @State var greet = "Loading..."
-    @State var title = "Loading..."
-
-    let service = PostRemoteRepositoryCompanion.shared.create()
-    let greeting = Greeting()
-
+    
+    
+    private var viewmodel = PostsViewModel()
+    
     
     func load() {
-        greeting.greeting {result, error in
-            if let result = result {
+        viewmodel.getPosts()
+        
+        viewmodel.allPostsLiveData.addObserver { (state) in
+            switch state as! NetworkResult {
+            case is NetworkResultIdle<AnyObject>:
+                print("Handle Idle state here")
                 
-                self.greet = result
-            } else if let error = error {
-                greet = "Error \(error)"
+            case is NetworkResultLoading<AnyObject>:
+                print("Handle loading state here")
+                
+            case is NetworkResultSuccess<AnyObject>:
+                print("Handle success success here")
+                let response = (state as! NetworkResultSuccess)
+                let postsResponse = response.data as! [PostResponse]
+                
+                
+                self.greet = postsResponse.randomElement()!.title
+                
+            case is NetworkResultError<AnyObject>:
+                print("handle error state here!")
+                let response = (state as! NetworkResultError)
+                let messageError = response.message as! [String]
+                
+                self.greet = "Error\(messageError)"
+                
+            default:
+                print("Have you done something new?")
             }
         }
-    }
-
-    func loadFromApi() {
-        service.getPosts{result, error in
-            if let result = result {
-                self.title = result.randomElement()?.title ?? ""
-            } else if let error = error {
-                title = "Error \(error)"
-            }
-        }
+        
     }
     
-	var body: some View {
+    
+    
+    var body: some View {
         
         Text(greet).onAppear {
             load()
-        }
-        
-        Text(title).onAppear {
-            loadFromApi()
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
-	}
+    static var previews: some View {
+        ContentView()
+    }
 }
+
+
