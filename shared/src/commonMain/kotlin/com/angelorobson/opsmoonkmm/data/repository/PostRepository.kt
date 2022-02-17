@@ -8,4 +8,7 @@ interface PostRepository {
     suspend fun getPosts(): List<PostResponse>
 
     suspend fun createPost(postRequest: PostRequest): PostResponse?
+
+    suspend fun saveAll(posts: List<PostResponse>)
+
 }

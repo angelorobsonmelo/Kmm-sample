@@ -1,11 +1,13 @@
 package com.angelorobson.opsmoonkmm.di
 
-import com.angelorobson.opsmoonkmm.data.datasource.network.PostNetworkDataSource
-import com.angelorobson.opsmoonkmm.data.datasource.network.PostNetworkDataSourceImpl
+import com.angelorobson.opsmoonkmm.data.datasource.local.IPostLocalDataSource
+import com.angelorobson.opsmoonkmm.data.datasource.local.PostLocalDataSourceImpl
+import com.angelorobson.opsmoonkmm.data.datasource.network.IPostNetworkDataSource
+import com.angelorobson.opsmoonkmm.data.datasource.network.PostRemoteDataSourceImpl
 import com.angelorobson.opsmoonkmm.data.repository.PostRepository
 import com.angelorobson.opsmoonkmm.data.repository.PostRepositoryImpl
 import com.angelorobson.opsmoonkmm.initLogger
-import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
+import com.angelorobson.opsmoonkmm.domain.usecases.IGetPostUseCase
 import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCaseImpl
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
@@ -43,15 +45,21 @@ val KodeinInjector = DI {
     /**
      * NETWORK DATA SOURCE
      */
-    bind<PostNetworkDataSource>() with provider { PostNetworkDataSourceImpl(client) }
+    bind<IPostNetworkDataSource>() with provider { PostRemoteDataSourceImpl(client) }
+
+
+    /**
+     * LOCAL DATA SOURCE
+     */
+    bind<IPostLocalDataSource>() with provider { PostLocalDataSourceImpl() }
 
     /**
      * REPOSITORIES
      */
-    bind<PostRepository>() with provider { PostRepositoryImpl(instance()) }
+    bind<PostRepository>() with provider { PostRepositoryImpl(instance(), instance()) }
 
     /**
      * USECASES
      */
-    bind<GetPostUseCase>() with singleton { GetPostUseCaseImpl(instance()) }
+    bind<IGetPostUseCase>() with singleton { GetPostUseCaseImpl(instance()) }
 }

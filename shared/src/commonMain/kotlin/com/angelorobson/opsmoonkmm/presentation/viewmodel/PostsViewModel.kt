@@ -2,7 +2,7 @@ package com.angelorobson.opsmoonkmm.presentation.viewmodel
 
 import com.angelorobson.opsmoonkmm.di.KodeinInjector
 import com.angelorobson.opsmoonkmm.domain.models.PostResponse
-import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
+import com.angelorobson.opsmoonkmm.domain.usecases.IGetPostUseCase
 import com.angelorobson.opsmoonkmm.utils.network.NetworkResult
 import dev.icerock.moko.mvvm.livedata.LiveData
 import dev.icerock.moko.mvvm.livedata.MutableLiveData
@@ -14,7 +14,7 @@ import org.kodein.di.instance
 
 class PostsViewModel : ViewModel() {
 
-    private val useCase by KodeinInjector.instance<GetPostUseCase>()
+    private val useCase by KodeinInjector.instance<IGetPostUseCase>()
 
     private val _allPostsLiveData =
         MutableLiveData<NetworkResult<List<PostResponse>>>(NetworkResult.Idle())

@@ -1,14 +1,13 @@
 package com.angelorobson.opsmoonkmm.domain.usecases
 
 import com.angelorobson.opsmoonkmm.domain.models.PostResponse
-import com.angelorobson.opsmoonkmm.data.datasource.network.PostNetworkDataSource
 import com.angelorobson.opsmoonkmm.data.repository.PostRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class GetPostUseCaseImpl(
     private val repository: PostRepository
-) : GetPostUseCase {
+) : IGetPostUseCase {
 
     override suspend fun getPosts(): Flow<List<PostResponse>> {
         return flow {

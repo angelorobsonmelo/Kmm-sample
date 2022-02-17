@@ -7,9 +7,9 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class PostNetworkDataSourceImpl(
+class PostRemoteDataSourceImpl(
     private val client: HttpClient
-) : PostNetworkDataSource {
+) : IPostNetworkDataSource {
 
     override suspend fun getPosts(): List<PostResponse> {
         return try {

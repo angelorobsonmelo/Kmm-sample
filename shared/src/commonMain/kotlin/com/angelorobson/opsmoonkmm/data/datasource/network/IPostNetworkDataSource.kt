@@ -4,7 +4,7 @@ import com.angelorobson.opsmoonkmm.domain.models.PostRequest
 import com.angelorobson.opsmoonkmm.domain.models.PostResponse
 
 
-interface PostNetworkDataSource {
+interface IPostNetworkDataSource {
 
     suspend fun getPosts(): List<PostResponse>
 
