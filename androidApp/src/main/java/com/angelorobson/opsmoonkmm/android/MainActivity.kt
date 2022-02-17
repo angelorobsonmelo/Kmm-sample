@@ -1,22 +1,12 @@
 package com.angelorobson.opsmoonkmm.android
 
+//import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.asLiveData
-import com.angelorobson.opsmoonkmm.Greeting
-import com.angelorobson.opsmoonkmm.data.repository.remote.PostRemoteRepository
-import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
-import com.angelorobson.opsmoonkmm.utils.RequestState
+import com.angelorobson.opsmoonkmm.utils.network.NetworkResult
 import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
-//import com.angelorobson.opsmoonkmm.viewmodel.PostsViewModel
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,24 +26,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(PostsViewModel::class.java)
-
         viewModel.getPosts()
 
-        viewModel.allRepositories.asLiveData().observe(this) {
+        viewModel.allPostsLiveData.addObserver {
             when (it) {
-                is RequestState.Error -> {
+                is NetworkResult.Loading -> {
 
                 }
-                RequestState.Idle -> {
+
+                is NetworkResult.Error -> {
 
                 }
-                RequestState.Loading -> {
 
+                is NetworkResult.Success -> {
+                    tv.text = it.data?.random()?.title
                 }
-                is RequestState.Success -> {
-                    tv.text = it.data.random().title
+                is NetworkResult.Idle -> {
+
                 }
             }
         }
+
     }
 }

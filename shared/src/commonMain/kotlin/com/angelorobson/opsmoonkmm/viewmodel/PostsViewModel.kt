@@ -3,12 +3,13 @@ package com.angelorobson.opsmoonkmm.viewmodel
 import com.angelorobson.opsmoonkmm.di.KodeinInjector
 import com.angelorobson.opsmoonkmm.domain.models.PostResponse
 import com.angelorobson.opsmoonkmm.domain.usecases.GetPostUseCase
-import com.angelorobson.opsmoonkmm.utils.RequestState
+import com.angelorobson.opsmoonkmm.utils.*
+import com.angelorobson.opsmoonkmm.utils.network.NetworkResult
+import dev.icerock.moko.mvvm.livedata.LiveData
+import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 
@@ -16,25 +17,33 @@ class PostsViewModel : ViewModel() {
 
     private val useCase by KodeinInjector.instance<GetPostUseCase>()
 
-    private val _allRepositories =
-        MutableStateFlow<RequestState<List<PostResponse>>>(RequestState.Idle)
-    val allRepositories: StateFlow<RequestState<List<PostResponse>>> = _allRepositories
+    private val _allPostsLiveData =
+        MutableLiveData<NetworkResult<List<PostResponse>>>(NetworkResult.Idle())
+    val allPostsLiveData: LiveData<NetworkResult<List<PostResponse>>> get() = _allPostsLiveData
 
     fun getPosts() {
         try {
             viewModelScope.launch {
                 useCase.getPosts()
                     .onStart {
-                        _allRepositories.value = RequestState.Loading
+                        _allPostsLiveData.value = NetworkResult.Loading()
+                    }
+                    .catch {
+                        _allPostsLiveData.value = NetworkResult.Error(it.message)
                     }
                     .collect {
-                        _allRepositories.value = RequestState.Success(it)
+                        _allPostsLiveData.value = NetworkResult.Success(it)
                     }
             }
         } catch (ex: Exception) {
-            _allRepositories.value = RequestState.Error(error = ex)
+            _allPostsLiveData.value = NetworkResult.Error(ex.message)
 
         }
 
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 }
