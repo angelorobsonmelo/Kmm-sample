@@ -26,7 +26,6 @@ kotlin {
 
     sourceSets {
         val ktorVersion = "1.6.3"
-        val sqlDelightVersion = "1.5.3"
         val napierVersion = "1.4.1"
         val kodeinVersion = "7.8.0"
         val mokoMvvmVersion = "0.11.0"
@@ -50,7 +49,7 @@ kotlin {
                 implementation("dev.icerock.moko:mvvm:$mokoMvvmVersion")
 
                 // SqlDelight
-                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:runtime:${properties["version.sqlDelight"]}")
 
             }
         }
@@ -66,7 +65,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
 
                 // SqlDelight
-                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:android-driver:${properties["version.sqlDelight"]}")
             }
         }
         val androidTest by getting {
@@ -86,7 +85,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             dependencies {
                 // SqlDelight
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:native-driver:${properties["version.sqlDelight"]}")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
