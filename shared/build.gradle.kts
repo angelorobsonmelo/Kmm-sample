@@ -50,7 +50,6 @@ kotlin {
 
                 // SqlDelight
                 implementation("com.squareup.sqldelight:runtime:${properties["version.sqlDelight"]}")
-
             }
         }
         val commonTest by getting {
@@ -103,7 +102,6 @@ kotlin {
         }
     }
 }
-
 
 sqldelight {
     database("PostDatabase") {
