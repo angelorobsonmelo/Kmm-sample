@@ -10,13 +10,28 @@ class PostRepositoryImpl(
     private val localDataSource: IPostLocalDataSource
 ) : PostRepository {
 
-    override suspend fun getPosts(): List<PostResponse> = dataSourceINetwork.getPosts()
+    override suspend fun getPostsFromService(): List<PostResponse> = dataSourceINetwork.getPostsFromService()
 
     override suspend fun createPost(postRequest: PostRequest): PostResponse? =
         dataSourceINetwork.createPost(postRequest)
 
-    override suspend fun saveAll(posts: List<PostResponse>) {
-        localDataSource.saveAll(posts)
+    override suspend fun saveAllLocally(posts: List<PostResponse>) {
+        localDataSource.saveAllLocally(posts)
+    }
+
+    override suspend fun deleteAllLocally() {
+        localDataSource.deleteAllLocally()
+    }
+
+    override suspend fun getAllFromLocalDatabase(): List<PostResponse> {
+        val posts = localDataSource.getAllFromLocalDatabase()
+        return posts.map {
+            PostResponse(
+                id = it.id.toInt(),
+                title = it.title,
+                body = it.body
+            )
+        }
     }
 
 

@@ -6,7 +6,7 @@ import com.angelorobson.opsmoonkmm.domain.models.PostResponse
 
 interface IPostNetworkDataSource {
 
-    suspend fun getPosts(): List<PostResponse>
+    suspend fun getPostsFromService(): List<PostResponse>
 
     suspend fun createPost(postRequest: PostRequest): PostResponse?
 

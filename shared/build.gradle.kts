@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    id("com.squareup.sqldelight")
     kotlin("native.cocoapods")
     id("com.android.library")
     kotlin("plugin.serialization")
@@ -25,6 +26,8 @@ kotlin {
 
     sourceSets {
         val ktorVersion = "1.6.3"
+        val sqlDelightVersion = "1.5.3"
+
         val commonMain by getting {
             dependencies {
                 //Logger
@@ -42,6 +45,9 @@ kotlin {
                 // MOKO - MVVM
                 implementation( "dev.icerock.moko:mvvm:0.11.0")
 
+                // SqlDelight
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+
             }
         }
         val commonTest by getting {
@@ -53,6 +59,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
         val androidTest by getting {
@@ -71,6 +78,7 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             dependencies {
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
             }
             //iosSimulatorArm64Main.dependsOn(this)
@@ -84,6 +92,14 @@ kotlin {
             iosArm64Test.dependsOn(this)
             //iosSimulatorArm64Test.dependsOn(this)
         }
+    }
+}
+
+
+sqldelight {
+    database("PostDatabase") {
+        packageName = "com.angelorobson.opsmoonkmm.db"
+        sourceFolders = listOf("sqldelight")
     }
 }
 
