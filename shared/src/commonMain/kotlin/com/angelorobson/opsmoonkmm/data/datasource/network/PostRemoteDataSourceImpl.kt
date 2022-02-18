@@ -11,7 +11,7 @@ class PostRemoteDataSourceImpl(
     private val client: HttpClient
 ) : IPostNetworkDataSource {
 
-    override suspend fun getPosts(): List<PostResponse> {
+    override suspend fun getPostsFromService(): List<PostResponse> {
         return try {
             client.get { url(HttpRoutes.POSTS) }
         } catch (ex: RedirectResponseException) {

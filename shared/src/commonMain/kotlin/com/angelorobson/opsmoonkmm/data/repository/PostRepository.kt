@@ -5,10 +5,14 @@ import com.angelorobson.opsmoonkmm.domain.models.PostResponse
 
 interface PostRepository {
 
-    suspend fun getPosts(): List<PostResponse>
+    suspend fun getPostsFromService(): List<PostResponse>
 
     suspend fun createPost(postRequest: PostRequest): PostResponse?
 
-    suspend fun saveAll(posts: List<PostResponse>)
+    suspend fun saveAllLocally(posts: List<PostResponse>)
+
+    suspend fun deleteAllLocally()
+
+    suspend fun getAllFromLocalDatabase(): List<PostResponse>
 
 }

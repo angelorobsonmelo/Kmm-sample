@@ -1,5 +1,8 @@
 package com.angelorobson.opsmoonkmm
 
+import android.content.Context
+import com.angelorobson.opsmoonkmm.db.PostDatabase
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
@@ -23,4 +26,11 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(OkHtt
 
 actual fun initLogger() {
     Napier.base(DebugAntilog())
+}
+
+lateinit var appContext: Context
+
+internal actual fun cache(): PostDatabase {
+    val driver = AndroidSqliteDriver(PostDatabase.Schema, appContext, "posts.db")
+    return PostDatabase(driver)
 }

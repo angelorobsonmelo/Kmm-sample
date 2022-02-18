@@ -1,5 +1,6 @@
 package com.angelorobson.opsmoonkmm.di
 
+import com.angelorobson.opsmoonkmm.cache
 import com.angelorobson.opsmoonkmm.data.datasource.local.IPostLocalDataSource
 import com.angelorobson.opsmoonkmm.data.datasource.local.PostLocalDataSourceImpl
 import com.angelorobson.opsmoonkmm.data.datasource.network.IPostNetworkDataSource
@@ -42,6 +43,8 @@ val KodeinInjector = DI {
         initLogger()
     }
 
+    val queries = cache().appDatabseQueries
+
     /**
      * NETWORK DATA SOURCE
      */
@@ -51,7 +54,7 @@ val KodeinInjector = DI {
     /**
      * LOCAL DATA SOURCE
      */
-    bind<IPostLocalDataSource>() with provider { PostLocalDataSourceImpl() }
+    bind<IPostLocalDataSource>() with provider { PostLocalDataSourceImpl(queries) }
 
     /**
      * REPOSITORIES

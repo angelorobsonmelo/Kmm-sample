@@ -11,8 +11,11 @@ class GetPostUseCaseImpl(
 
     override suspend fun getPosts(): Flow<List<PostResponse>> {
         return flow {
-            val items = repository.getPosts()
-            emit(items)
+            val items = repository.getPostsFromService()
+            repository.deleteAllLocally()
+            repository.saveAllLocally(items)
+            val itemsLocally = repository.getAllFromLocalDatabase()
+            emit(itemsLocally)
         }
     }
 }

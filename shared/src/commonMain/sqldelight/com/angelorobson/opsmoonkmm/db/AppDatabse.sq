@@ -1,0 +1,15 @@
+CREATE TABLE post (
+  key INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  body TEXT NOT NULL
+);
+
+insertItem:
+INSERT OR REPLACE INTO post (id, title, body) VALUES (?, ?, ?);
+
+selectAll:
+SELECT * FROM post ORDER BY key;
+
+deleteAll:
+DELETE FROM post;
