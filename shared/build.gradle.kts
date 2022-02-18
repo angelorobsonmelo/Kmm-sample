@@ -27,23 +27,27 @@ kotlin {
     sourceSets {
         val ktorVersion = "1.6.3"
         val sqlDelightVersion = "1.5.3"
+        val napierVersion = "1.4.1"
+        val kodeinVersion = "7.8.0"
+        val mokoMvvmVersion = "0.11.0"
+        val kotlinxSerializationCoreVersion = "1.2.2"
 
         val commonMain by getting {
             dependencies {
                 //Logger
-                implementation("io.github.aakira:napier:1.4.1")
-                implementation("org.kodein.di:kodein-di:7.8.0")
+                implementation("io.github.aakira:napier:$napierVersion")
+                implementation("org.kodein.di:kodein-di:$kodeinVersion")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
 
-//                 Serialization
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
+                // Serialization
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$kotlinxSerializationCoreVersion")
 
                 // MOKO - MVVM
-                implementation( "dev.icerock.moko:mvvm:0.11.0")
+                implementation("dev.icerock.moko:mvvm:$mokoMvvmVersion")
 
                 // SqlDelight
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
@@ -58,7 +62,10 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                // Ktor
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+
+                // SqlDelight
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
@@ -78,7 +85,10 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             dependencies {
+                // SqlDelight
                 implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+
+                // Ktor
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
             }
             //iosSimulatorArm64Main.dependsOn(this)
