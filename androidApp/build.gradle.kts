@@ -6,7 +6,7 @@ plugins {
 android {
     compileSdk = 32
     defaultConfig {
-        applicationId = "com.angelorobson.opsmoonkmm.android"
+        applicationId = "com.angelorobson.kmm.android"
         minSdk = 21
         targetSdk = 32
         versionCode = 1

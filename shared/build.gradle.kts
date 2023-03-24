@@ -105,7 +105,7 @@ kotlin {
 
 sqldelight {
     database("PostDatabase") {
-        packageName = "com.angelorobson.opsmoonkmm.db"
+        packageName = "com.angelorobson.kmm.db"
         sourceFolders = listOf("sqldelight")
     }
 }
