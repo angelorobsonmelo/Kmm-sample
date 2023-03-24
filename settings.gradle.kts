@@ -6,6 +6,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "OpsMoonKmm"
+rootProject.name = "KMM Sample"
 include(":androidApp")
 include(":shared")
